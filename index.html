@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Listing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="navbar">
+    <h3 style="text-align: left; padding: 20px 0;">PRODUCT</h3>
+    <p href="#" class="nav">HOME</p>
+    <p href="#" class="nav">PRODUCT</p>
+    <p href="#" class="nav">ABOUT</p>
+    <p href="#" class="nav">CONTACT</p>
+    <p href="#" class="nav">CART</p>
+    </div> 
+  <div class="container" id="productContainer"> 
+    <!-- product cards  -->
+  </div>
+
+  <script>
+    async function fetchProducts() {
+      try {
+        const response = await fetch('https://dummyjson.com/products');
+        const data = await response.json();
+        const products = data.products;
+
+        const container = document.getElementById('productContainer');
+
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+
+          card.innerHTML = `
+            <img src="${product.thumbnail}" alt="${product.title}" class="product-image">
+            <div class="product-info">
+              <div class="product-name">${product.title}</div>
+              <div class="product-price">$${product.price}</div>
+              <div class="product-description">${product.description}</div>
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+
+    window.onload = fetchProducts;
+  </script>
+</body>
+</html>
